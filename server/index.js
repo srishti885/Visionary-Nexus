@@ -32,6 +32,7 @@ const startServer = async () => {
 
     if (!mongoUrl) {
       console.error("ERROR: MONGODB_URL is missing in .env file!");
+      // Render par Environment Variables mein MONGODB_URL hona zaroori hai
       return;
     }
 
@@ -39,8 +40,10 @@ const startServer = async () => {
     await connectDB(mongoUrl);
     console.log("MongoDB Connected Successfully!");
 
-    app.listen(8080, () => {
-      console.log('Server is running on: http://localhost:8080');
+    // UPDATED PORT LOGIC: Render automatically assigns a port via process.env.PORT
+    const PORT = process.env.PORT || 8080;
+    app.listen(PORT, () => {
+      console.log(`Server is running on port: ${PORT}`);
     });
 
   } catch (error) {

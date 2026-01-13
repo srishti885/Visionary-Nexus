@@ -242,7 +242,7 @@ const App = () => {
               <span className="text-white font-black italic ml-1 text-sm tracking-wide"> Srishti Goenka </span>
             </p>
             <p className="text-slate-600 text-[9px] mt-1 uppercase tracking-widest font-bold">
-              © 2026 All Rights Reserved
+              © 2025 All Rights Reserved
             </p>
           </div>
 
