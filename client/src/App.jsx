@@ -6,6 +6,9 @@ import {
   FaLock, FaSignOutAlt, FaPlus, FaGlobe, FaLock as FaPrivate
 } from 'react-icons/fa';
 
+// --- BACKEND URL CONFIGURATION ---
+const API_BASE_URL = "https://visionary-nexus.onrender.com/api/v1";
+
 // --- AUTH COMPONENT ---
 const AuthPage = ({ setUser }) => {
   const [isLogin, setIsLogin] = useState(true);
@@ -15,7 +18,8 @@ const AuthPage = ({ setUser }) => {
     e.preventDefault();
     const endpoint = isLogin ? 'login' : 'signup';
     try {
-      const { data } = await axios.post(`http://localhost:8080/api/v1/auth/${endpoint}`, formData);
+      // Updated: Using API_BASE_URL
+      const { data } = await axios.post(`${API_BASE_URL}/auth/${endpoint}`, formData);
       if (isLogin) {
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
@@ -91,7 +95,8 @@ const App = () => {
     setImage(null);
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post('http://localhost:8080/api/v1/dalle', { prompt }, {
+      // Updated: Using API_BASE_URL
+      const response = await axios.post(`${API_BASE_URL}/dalle`, { prompt }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setImage(response.data.photo);
@@ -104,7 +109,8 @@ const App = () => {
     setView('global');
     setLoading(true);
     try {
-      const { data } = await axios.get('http://localhost:8080/api/v1/dalle/gallery');
+      // Updated: Using API_BASE_URL
+      const { data } = await axios.get(`${API_BASE_URL}/dalle/gallery`);
       setGalleryItems(data.data);
     } catch (err) { console.log(err); }
     setLoading(false);
@@ -115,7 +121,8 @@ const App = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const { data } = await axios.get('http://localhost:8080/api/v1/dalle/my-creations', {
+      // Updated: Using API_BASE_URL
+      const { data } = await axios.get(`${API_BASE_URL}/dalle/my-creations`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setGalleryItems(data.data);
@@ -127,7 +134,8 @@ const App = () => {
     if (!window.confirm("Purge this neural asset permanently?")) return;
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:8080/api/v1/dalle/${id}`, {
+      // Updated: Using API_BASE_URL
+      await axios.delete(`${API_BASE_URL}/dalle/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setGalleryItems(prev => prev.filter(item => item._id !== id));
